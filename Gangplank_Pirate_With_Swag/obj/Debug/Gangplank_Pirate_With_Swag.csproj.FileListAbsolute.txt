@@ -8,6 +8,5 @@ c:\users\sören\documents\visual studio 2013\Projects\Gangplank_Pirate_With_Swag
 c:\users\sören\documents\visual studio 2013\Projects\Gangplank_Pirate_With_Swag\Gangplank_Pirate_With_Swag\bin\Debug\clipper_library.dll
 c:\users\sören\documents\visual studio 2013\Projects\Gangplank_Pirate_With_Swag\Gangplank_Pirate_With_Swag\bin\Debug\LeagueSharp.Sandbox.dll
 c:\users\sören\documents\visual studio 2013\Projects\Gangplank_Pirate_With_Swag\Gangplank_Pirate_With_Swag\bin\Debug\LeagueSharp.xml
-c:\users\sören\documents\visual studio 2013\Projects\Gangplank_Pirate_With_Swag\Gangplank_Pirate_With_Swag\obj\Debug\Gangplank_Pirate_With_Swag.csprojResolveAssemblyReference.cache
 c:\users\sören\documents\visual studio 2013\Projects\Gangplank_Pirate_With_Swag\Gangplank_Pirate_With_Swag\obj\Debug\Gangplank_Pirate_With_Swag.exe
 c:\users\sören\documents\visual studio 2013\Projects\Gangplank_Pirate_With_Swag\Gangplank_Pirate_With_Swag\obj\Debug\Gangplank_Pirate_With_Swag.pdb

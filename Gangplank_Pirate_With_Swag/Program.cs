@@ -14,14 +14,14 @@ namespace Gangplank_Pirate_With_Swag
     class Program
     {
         static Menu config;
-        static SpellSlot SummonerDot = player.GetSpellSlot("SummonerDot");
         static List<BuffType> buffs = new List<BuffType>();
         static Spell Q = new Spell(SpellSlot.Q, 625);
         static Spell W = new Spell(SpellSlot.W);
         static Spell E = new Spell(SpellSlot.E);
         static Spell R = new Spell(SpellSlot.R);
-        static Obj_AI_Hero player = ObjectManager.Player;
         static Orbwalking.Orbwalker orbwalker;
+        static Obj_AI_Hero player = ObjectManager.Player;
+        static SpellSlot SummonerDot = player.GetSpellSlot("SummonerDot");
 
         static void Main(string[] args)
         {
@@ -83,15 +83,16 @@ namespace Gangplank_Pirate_With_Swag
             config.AddToMainMenu();
             #endregion
 
+            Game.PrintChat("Pirate with Swag loaded. (C)MasterGF");
+            Game.PrintChat("A big thanks to DanThePman i learnd really much from his Code.");
+
+
             buffs.Add(BuffType.Slow);
             buffs.Add(BuffType.Taunt);
             buffs.Add(BuffType.Stun);
             buffs.Add(BuffType.Polymorph);
             buffs.Add(BuffType.Fear);
             buffs.Add(BuffType.Charm);
-
-            Game.PrintChat("Pirate with Swag loaded. (C)MasterGF");
-            Game.PrintChat("A big thanks to DanThePman i learnd really much from his Code.");
 
             Drawing.OnDraw += OnDraw;
             Game.OnUpdate += OnGameUpdate;
@@ -105,7 +106,6 @@ namespace Gangplank_Pirate_With_Swag
 
         private static void OnGameUpdate(EventArgs args)
         {
-
             bool comboActive = config.SubMenu("Combo").Item("comboActive").GetValue<KeyBind>().Active;
             bool harassActive = config.SubMenu("Harass").Item("harassActive").GetValue<KeyBind>().Active;
 
@@ -218,21 +218,6 @@ namespace Gangplank_Pirate_With_Swag
                     player.Distance(target.Position) <= player.AttackRange &&
                     target != null)
                     W.Cast();
-            }
-            if (config.SubMenu("Misc").Item("useRGlobal").GetValue<bool>())
-            {
-                foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>().Where(x => x.IsEnemy &&
-                    x.Health <= 300 && R.CanCast(x)))
-                {
-                    foreach (var ally in ObjectManager.Get<Obj_AI_Hero>().Where(x => !x.IsEnemy))
-                    {
-                        if (ally.Distance(enemy, true) <= 500 * 500)
-                        {
-                            var preditionForR = R.GetPrediction(enemy);
-                            R.Cast(preditionForR.CastPosition, true);
-                        }
-                    }
-                }
             }
         }
         static bool CCed()
