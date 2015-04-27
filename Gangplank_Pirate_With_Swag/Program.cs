@@ -20,8 +20,9 @@ namespace Gangplank_Pirate_With_Swag
         static Spell E = new Spell(SpellSlot.E);
         static Spell R = new Spell(SpellSlot.R);
         static Orbwalking.Orbwalker orbwalker;
-        static Obj_AI_Hero player = ObjectManager.Player;
-        static SpellSlot SummonerDot = player.GetSpellSlot("SummonerDot");
+        static Obj_AI_Hero Player = ObjectManager.Player;
+        static SpellSlot SummonerDot = Player.GetSpellSlot("SummonerDot");
+        public const string ChampionName = "Gangplank";
 
         static void Main(string[] args)
         {
@@ -30,6 +31,9 @@ namespace Gangplank_Pirate_With_Swag
 
         private static void OnGameLoad(EventArgs args)
         {
+            Player = ObjectManager.Player;
+            if (Player.BaseSkinName != ChampionName) return;
+
             #region Menu
             config = new Menu("Pirate with Swag", "Pirate with Swag", true);
 
@@ -128,12 +132,12 @@ namespace Gangplank_Pirate_With_Swag
                 if (target != null)
                 {
                     if (SummonerDot != SpellSlot.Unknown &&
-                        player.Distance(target.Position) <= 600 &&
+                        Player.Distance(target.Position) <= 600 &&
                         config.SubMenu("Combo").Item("useIgnite").GetValue<bool>())
                     {
-                        if (player.GetSummonerSpellDamage(target, Damage.SummonerSpell.Ignite) > target.Health)
+                        if (Player.GetSummonerSpellDamage(target, Damage.SummonerSpell.Ignite) > target.Health)
                         {
-                            player.Spellbook.CastSpell(SummonerDot, target);
+                            Player.Spellbook.CastSpell(SummonerDot, target);
                         }
                     }
                 }
@@ -143,7 +147,7 @@ namespace Gangplank_Pirate_With_Swag
                 }
                 if (config.SubMenu("Combo").Item("useW").GetValue<bool>())
                 {
-                    if (player.Health < (player.MaxHealth / 100) * config.SubMenu("Misc").Item("useWToHeal").GetValue<Slider>().Value)
+                    if (Player.Health < (Player.MaxHealth / 100) * config.SubMenu("Misc").Item("useWToHeal").GetValue<Slider>().Value)
                     {
                         if (!config.SubMenu("Misc").Item("useWToCleanseOnly").GetValue<bool>())
                             W.Cast(true);
@@ -160,7 +164,7 @@ namespace Gangplank_Pirate_With_Swag
                         int[] QmanaCost = new int[5] { 50, 55, 60, 65, 70 };
 
                         if (config.SubMenu("Farm").Item("farmActive").GetValue<KeyBind>().Active &&
-                            player.Mana >= QmanaCost[Q.Level - 1] * 2)
+                            Player.Mana >= QmanaCost[Q.Level - 1] * 2)
                         {
                             foreach (var minion in MinionManager.GetMinions(625f, MinionTypes.All, MinionTeam.Enemy).
                                 Where(x => Q.GetDamage(x) >= x.Health))
@@ -186,7 +190,7 @@ namespace Gangplank_Pirate_With_Swag
                 {
                     int[] QmanaCost = new int[5] { 50, 55, 60, 65, 70 };
 
-                    if (player.Mana >= QmanaCost[Q.Level - 1] * 2)
+                    if (Player.Mana >= QmanaCost[Q.Level - 1] * 2)
                     {
                         foreach (var minion in MinionManager.GetMinions(625f, MinionTypes.All, MinionTeam.Enemy).
                             Where(x => Q.GetDamage(x) >= x.Health))
@@ -213,9 +217,9 @@ namespace Gangplank_Pirate_With_Swag
             if (true) //cleanse cc
             {
                 if (CCed()) W.Cast();
-                if (player.HasBuffOfType(BuffType.Blind) &&
+                if (Player.HasBuffOfType(BuffType.Blind) &&
                     config.SubMenu("Misc").SubMenu("ccs").Item("blind").GetValue<bool>() &&
-                    player.Distance(target.Position) <= player.AttackRange &&
+                    Player.Distance(target.Position) <= Player.AttackRange &&
                     target != null)
                     W.Cast();
             }
@@ -224,7 +228,7 @@ namespace Gangplank_Pirate_With_Swag
         {
             foreach (var effect in buffs)
             {
-                if (player.HasBuffOfType(effect) &&
+                if (Player.HasBuffOfType(effect) &&
                     config.SubMenu("Misc").SubMenu("ccs").Item(effect.ToString().ToLower()).GetValue<bool>())
                 {
                     return true;
